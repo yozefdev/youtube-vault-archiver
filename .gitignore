@@ -1,0 +1,35 @@
+# 環境変数
+.env
+
+# 認証情報
+client_secret*.json
+credentials.json
+token.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 仮想環境
+.venv/
+venv/
+
+# IDE/OS
+.vscode/
+.DS_Store
+
+# ログ
+logs/
+*.log
+
+# ログファイル
+*.log
+log/
+
+# 出力ファイル
+transcripts/
+output/
+*.md
+!README.md
+
