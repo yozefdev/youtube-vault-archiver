@@ -30,7 +30,8 @@ YouTubeで見た動画の内容をObsidianのVaultに保存し、知識管理シ
 
 ## 必要要件
 
-- Python 3.9以上
+- Python 3.13以上
+- [uv](https://docs.astral.sh/uv/) パッケージマネージャー
 - Google Cloud Platform アカウント
 - YouTube Data API v3 有効化
 - Gemini API キー
@@ -40,7 +41,7 @@ YouTubeで見た動画の内容をObsidianのVaultに保存し、知識管理シ
 ### 1. 依存関係のインストール
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ### 2. APIの設定
@@ -79,7 +80,7 @@ MAX_CONCURRENT=3  # APIレート制限に注意
 ## 使用方法
 
 ```bash
-python main.py
+uv run python main.py
 ```
 
 初回実行時はブラウザでGoogle認証が必要です。
@@ -125,9 +126,11 @@ frameborder="0" allowfullscreen style="width: 100%; aspect-ratio: 16/9;"></ifram
 ## ファイル構成
 
 ```
-youtube-transcript-flow/
+youtube-vault-archiver/
 ├── main.py                 # メインスクリプト（非同期処理対応）
-├── requirements.txt        # Python依存関係
+├── pyproject.toml          # プロジェクト設定・依存関係
+├── uv.lock                 # 依存関係ロックファイル
+├── .python-version         # Pythonバージョン指定
 ├── .env.example           # 環境変数テンプレート
 ├── .env                   # 環境変数（要作成）
 ├── .gitignore            # Git除外設定
