@@ -6,6 +6,7 @@ YouTube再生リストから動画URL一覧を取得し、
 
 import logging
 import os
+from pathlib import Path
 from typing import Dict, List
 
 from google.auth.transport.requests import Request
@@ -29,12 +30,15 @@ def authenticate():
     Returns:
         認証済みのYouTube APIクライアント
     """
+    project_root = Path(__file__).parent.parent
     creds = None
 
     # token.json ファイルから既存の認証情報を読み込み
-    if os.path.exists("token.json"):
+    if os.path.exists(project_root / "token.json"):
         try:
-            creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+            creds = Credentials.from_authorized_user_file(
+                project_root / "token.json", SCOPES
+            )
         except Exception as e:
             logger.error("認証トークンの読み込みに失敗: %s", e)
 
@@ -49,19 +53,19 @@ def authenticate():
 
         # 新規認証フローの実行
         if not creds:
-            if not os.path.exists("client_secret.json"):
+            if not (project_root / "client_secret.json").exists():
                 raise FileNotFoundError(
                     "client_secret.json が見つかりません。"
                     "Google Cloud Console から OAuth 2.0 クライアントIDをダウンロードしてください。"
                 )
 
             flow = InstalledAppFlow.from_client_secrets_file(
-                "client_secret.json", SCOPES
+                project_root / "client_secret.json", SCOPES
             )
             creds = flow.run_local_server(port=0)
 
         # 認証情報を保存
-        with open("token.json", "w") as token:
+        with open(project_root / "token.json", "w") as token:
             token.write(creds.to_json())
 
     # YouTube API クライアントを作成
