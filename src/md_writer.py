@@ -98,8 +98,7 @@ def save_transcript_to_markdown(
 
     # ファイル名を動画タイトルから生成
     title = video_info.get("title", "untitled")
-    filename = f"[YouTube]{title}"
-    file_path = get_unique_filename(output_dir, filename)
+    file_path = get_unique_filename(output_dir, title)
 
     # マークダウンコンテンツを作成
     content = create_markdown_content(video_info, transcript, article)
